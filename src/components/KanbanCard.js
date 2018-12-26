@@ -13,13 +13,15 @@ class KanbanCard extends Component {
 
   render() {
     const cardStyle = {
-      backgroundColor: "#f9f7f7",
+      backgroundColor: "#ecf0f1",
       paddingLeft: "0px",
       paddingTop: "5px",
       paddingBottom: "5px",
       marginLeft: "0px",
+      borderRadius: "3px",
       marginRight: "5px",
-      marginBottom: "5px"
+      marginBottom: "5px",
+      boxShadow: "2px 2px 10px #34495e"
     };
 
     return (

@@ -34,9 +34,11 @@ class KanbanColumn extends Component {
       marginBottom: "5px",
       paddingLeft: "5px",
       paddingTop: "0px",
+      borderRadius: "5px",
       width: "230px",
       textAlign: "center",
-      backgroundColor: this.state.mouseIsHovering ? "#d3d3d3" : "#f0eeee"
+      boxShadow: "2px 2px 10px #34495e",
+      backgroundColor: this.state.mouseIsHovering ? "#ecf0f1" : "#bdc3c7"
     };
     return (
       <div
