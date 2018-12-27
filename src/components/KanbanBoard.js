@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import KanbanColumn from "./KanbanColumn";
 import { projects } from "../projects";
-
+import "./kanaban.scss";
 /*
  * The Kanban Board React component
  */
@@ -43,12 +43,8 @@ class KanbanBoard extends Component {
       return <h3>Loading...</h3>;
     }
 
-    const style = {
-      padding: "10px"
-    };
-
     return (
-      <div style={style}>
+      <div className="kboard">
         {this.columns.map(column => {
           return (
             <KanbanColumn

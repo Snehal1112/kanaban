@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import KanbanBoard from "./components/KanbanBoard";
 
-import "./index.css";
 /*
  * The Kanban React component
  */
