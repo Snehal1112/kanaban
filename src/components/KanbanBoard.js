@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import KanbanColumn from "./KanbanColumn";
 import { projects } from "../projects";
 import "./kanaban.scss";
+import KanabanNav from "./KanabanNav";
 /*
  * The Kanban Board React component
  */
@@ -44,21 +45,24 @@ class KanbanBoard extends Component {
     }
 
     return (
-      <div className="kboard">
-        {this.columns.map(column => {
-          return (
-            <KanbanColumn
-              name={column.name}
-              stage={column.stage}
-              projects={this.state.projects.filter(project => {
-                return parseInt(project.project_stage, 10) === column.stage;
-              })}
-              onDragEnter={this.handleOnDragEnter}
-              onDragEnd={this.handleOnDragEnd}
-              key={column.stage}
-            />
-          );
-        })}
+      <div>
+        <KanabanNav />
+        <div className="kboard">
+          {this.columns.map(column => {
+            return (
+              <KanbanColumn
+                name={column.name}
+                stage={column.stage}
+                projects={this.state.projects.filter(project => {
+                  return parseInt(project.project_stage, 10) === column.stage;
+                })}
+                onDragEnter={this.handleOnDragEnter}
+                onDragEnd={this.handleOnDragEnd}
+                key={column.stage}
+              />
+            );
+          })}
+        </div>
       </div>
     );
   }
