@@ -1,60 +1,49 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
 /*
  * The Kanban Board Card component
  */
 class KanbanCard extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      collapsed: true
-    };
-  }
+	constructor(props) {
+		super(props);
+		this.state = {
+			collapsed: true
+		};
+	}
 
-  render() {
-    const cardStyle = {
-      backgroundColor: "#ecf0f1",
-      paddingLeft: "0px",
-      paddingTop: "5px",
-      paddingBottom: "5px",
-      marginLeft: "0px",
-      borderRadius: "3px",
-      marginRight: "5px",
-      marginBottom: "5px",
-      boxShadow: "2px 2px 10px #34495e"
-    };
-
-    return (
-      <div
-        style={cardStyle}
-        draggable={true}
-        onDragEnd={e => {
-          this.props.onDragEnd(e, this.props.project);
-        }}
-      >
-        <div>
-          <h4>{this.props.project.name}</h4>
-        </div>
-        {this.state.collapsed ? null : (
-          <div>
-            <strong>Description: </strong>
-            {this.props.project.description}
-            <br />
-          </div>
-        )}
-        <div
-          style={{ width: "100%" }}
-          onClick={e => {
-            this.setState({ collapsed: !this.state.collapsed });
-          }}
-        >
-          {this.state.collapsed
-            ? String.fromCharCode("9660")
-            : String.fromCharCode("9650")}
-        </div>
-      </div>
-    );
-  }
+	render() {
+		return (
+			<div
+				className="card"
+				draggable={true}
+				onDragEnd={(e) => {
+					this.props.onDragEnd(e, this.props.project);
+				}}
+			>
+				<div className="ghx-grabber" />
+				<div className="ghx-issue-content">
+					<div className="ghx-issue-fields">
+						<div className="ghx-type">
+							<img src="https://jira.kopano.io/secure/viewavatar?size=xsmall&avatarId=10303&avatarType=issuetype" />
+						</div>
+						<div className="ghx-key">
+							<a href="#">{this.props.project.name}</a>
+						</div>
+						<div className="ghx-summary">
+							<span className="ghx-inner"> {this.props.project.description}</span>
+						</div>
+					</div>
+					<div className="ghx-highlighted-fields">
+						<div className="ghx-highlighted-field">
+							<span className="aui-label ghx-label-6" title="Iconpack">
+								Iconpack
+							</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		);
+	}
 }
 
 export default KanbanCard;
