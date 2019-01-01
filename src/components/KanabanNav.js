@@ -6,6 +6,10 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { faUserAlt, faSearch, faBars } from '@fortawesome/free-solid-svg-icons';
 library.add(faUserAlt, faSearch, faBars);
 class KanabanNav extends Component {
+	/**
+	 * 
+	 * @param {*} props 
+	 */
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -17,14 +21,27 @@ class KanabanNav extends Component {
 		};
 		this.myRef = React.createRef();
 	}
+
+	/**
+	 * 
+	 * @param {*} e 
+	 */
 	onContextMenuClick(e) {
 		e.preventDefault();
 		this.setState({ visible: true, position: { x: e.clientX, y: e.clientY } });
 	}
 
+	/**
+	 * 
+	 * @param {*} e 
+	 */
 	onClickContextMenu(e) {
-		console.log(e.target);
+		this.setState({ visible: false });
 	}
+
+	/**
+	 * 
+	 */
 	render() {
 		return (
 			<div className="top-nav">
@@ -50,11 +67,13 @@ class KanabanNav extends Component {
 					</li>
 				</ul>
 				{this.state.visible ? (
-					<ContextMenu position={this.state.position} onClickContextMenu={this.onClickContextMenu}>
-						<ContextItem title={'snehal1'} />
+					<ContextMenu position={this.state.position} onClickContextMenu={this.onClickContextMenu.bind(this)}>
+						<ContextItem title={'Profile'} />
 						<ContextItem title={'snehal2'} />
 						<ContextItem title={'snehal3'} />
-						<ContextItem title={'snehal4'} />
+						<ContextItem title={'Settings'} />
+						<ContextItem className={'hr'} />
+						<ContextItem title={'Logout'} />
 					</ContextMenu>
 				) : (
 					''

@@ -1,9 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class ContextItem extends Component {
-	render() {
-		return <div style={{ padding: '10px' }}>{this.props.title}</div>;
-	}
+function ContextItem(props) {
+	return (
+		<div className={`context-item ${props.className}`} style={props.styles}>
+			{props.title}
+		</div>
+	);
 }
 
 export default ContextItem;

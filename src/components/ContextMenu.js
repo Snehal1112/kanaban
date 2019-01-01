@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 class ContextMenu extends Component {
 	render() {
-		const { children, className, style } = this.props;
+		const { children } = this.props;
 		return (
 			<div
 				className={'context-menu'}
