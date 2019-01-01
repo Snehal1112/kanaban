@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Bug from '@atlaskit/icon-object/glyph/epic/16';
 
 /*
  * The Kanban Board Card component
@@ -24,7 +25,7 @@ class KanbanCard extends Component {
 				<div className="ghx-issue-content">
 					<div className="ghx-issue-fields">
 						<div className="ghx-type">
-							<img src="https://jira.kopano.io/secure/viewavatar?size=xsmall&avatarId=10303&avatarType=issuetype" />
+							<Bug />
 						</div>
 						<div className="ghx-key">
 							<a href="#">{this.props.project.name}</a>
