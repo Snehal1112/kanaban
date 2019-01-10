@@ -1,14 +1,13 @@
-import { AUTH } from "../../actions/Actions";
+import { AUTH } from '../../actions/Actions';
 const initialState = {
-  result: {}
+	result: {}
 };
 
 export default (state = initialState, { type, payload }) => {
-  switch (type) {
-    case AUTH:
-      return { ...state, result: payload };
-
-    default:
-      return state;
-  }
+	switch (type) {
+		case AUTH:
+			return { ...state, data: payload };
+		default:
+			return state;
+	}
 };

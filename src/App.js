@@ -1,28 +1,25 @@
-import React, { Component } from "react";
-import KanbanBoard from "./components/KanbanBoard";
-import Login from "./components/Login";
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
-import { authenticate } from "./actions/Authentication";
-
+import React, { Component } from 'react';
+import KanbanBoard from './container/KanbanBoard';
+import Login from './container/Login';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { withSubscription } from './HOC/wrapComponent';
 /*
  * The Kanban React component
  */
 class App extends Component {
-  render() {
-    return true ? <Login /> : <KanbanBoard />;
-  }
+	render() {
+		let { data = undefined } = this.props;
+		return <div>{withSubscription(Login, KanbanBoard, data)}</div>;
+	}
 }
 
 App.propTypes = {
-  result: PropTypes.object
+	data: PropTypes.object
 };
 
-const mapStateToProps = state => ({
-  result: state.auth.result
+const mapStateToProps = (state) => ({
+	data: state.auth.data
 });
 
-export default connect(
-  mapStateToProps,
-  { authenticate }
-)(App);
+export default connect(mapStateToProps, {})(App);

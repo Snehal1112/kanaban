@@ -1,10 +1,11 @@
-import { AUTH } from "./Actions";
-
-export const authenticate = payLoad => dispatch => {
-  fetch("https://mysterious-depths-61756.herokuapp.com/api/v1/user/login", {
-    method: "POST",
-    body: JSON.stringify(payLoad)
-  })
-    .then(response => response.json())
-    .then(data => dispatch({ type: AUTH, payload: data }));
+import { AUTH } from './Actions';
+import Config from '../config';
+export const authenticate = (payLoad) => (dispatch) => {
+	fetch(`${Config.apiRoot}/user/login`, {
+		method: 'POST',
+		body: JSON.stringify(payLoad)
+	})
+		.then((response) => response.json())
+		.then((data) => dispatch({ type: AUTH, payload: data }))
+		.catch((data) => console.error(data));
 };

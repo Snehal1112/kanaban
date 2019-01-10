@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import ContextMenu from './ContextMenu';
-import ContextItem from './ContextItem';
+import ContextMenu from '../components/ContextMenu';
+import ContextItem from '../components/ContextItem';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faUserAlt, faSearch, faBars } from '@fortawesome/free-solid-svg-icons';

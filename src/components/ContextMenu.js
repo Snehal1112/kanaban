@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './ContextMenu.scss';
 class ContextMenu extends Component {
 	render() {
 		const { children } = this.props;
