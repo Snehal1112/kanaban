@@ -9,8 +9,7 @@ import { withSubscription } from './HOC/wrapComponent';
  */
 class App extends Component {
 	render() {
-		let { data = undefined } = this.props;
-		return <div>{withSubscription(Login, KanbanBoard, data)}</div>;
+		return <div>{withSubscription(Login, KanbanBoard, this.props)}</div>;
 	}
 }
 
@@ -19,7 +18,7 @@ App.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-	data: state.auth.data
+	data: state.auth.data ? state.auth.data : { loading: false }
 });
 
 export default connect(mapStateToProps, {})(App);

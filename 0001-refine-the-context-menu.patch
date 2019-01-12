@@ -1,0 +1,208 @@
+From 883d9798065f9763ac08f63559c0e39777ba6b93 Mon Sep 17 00:00:00 2001
+From: Snehal Dangroshiya <snehaldangroshiya@gmail.com>
+Date: Tue, 1 Jan 2019 23:23:38 +0530
+Subject: [PATCH] refine the context menu
+
+---
+ src/components/ContextItem.js | 12 +++++++-----
+ src/components/ContextMenu.js | 15 ++++++++++++++-
+ src/components/KanabanNav.js  | 29 +++++++++++++++++++++++------
+ src/components/KanbanBoard.js | 32 ++++++++++++++++----------------
+ src/components/kanaban.scss   | 14 +++++++++++++-
+ 5 files changed, 73 insertions(+), 29 deletions(-)
+
+diff --git a/src/components/ContextItem.js b/src/components/ContextItem.js
+index a25857e..9629d02 100644
+--- a/src/components/ContextItem.js
++++ b/src/components/ContextItem.js
+@@ -1,9 +1,11 @@
+-import React, { Component } from 'react';
++import React from 'react';
+ 
+-class ContextItem extends Component {
+-	render() {
+-		return <div style={{ padding: '10px' }}>{this.props.title}</div>;
+-	}
++function ContextItem(props) {
++	return (
++		<div className={`context-item ${props.className ? props.className : ''}`} style={props.styles}>
++			<span>{props.title}</span>
++		</div>
++	);
+ }
+ 
+ export default ContextItem;
+diff --git a/src/components/ContextMenu.js b/src/components/ContextMenu.js
+index 9485e23..d8d58a9 100644
+--- a/src/components/ContextMenu.js
++++ b/src/components/ContextMenu.js
+@@ -1,15 +1,28 @@
+ import React, { Component } from 'react';
+ class ContextMenu extends Component {
++	constructor(props) {
++		super(props);
++	}
++
++	componentDidMount() {
++		this.contextMenu.focus();
++	}
++
+ 	render() {
+-		const { children, className, style } = this.props;
++		const { children } = this.props;
+ 		return (
+ 			<div
++				tabIndex="0"
+ 				className={'context-menu'}
+ 				style={{
+ 					top: this.props.position.y,
+ 					right: this.props.position.y
+ 				}}
++				ref={(input) => {
++					this.contextMenu = input;
++				}}
+ 				onClick={this.props.onClickContextMenu}
++				onBlur={this.props.onClickContextMenu}
+ 			>
+ 				{children}
+ 			</div>
+diff --git a/src/components/KanabanNav.js b/src/components/KanabanNav.js
+index e19de6b..6bb14a1 100644
+--- a/src/components/KanabanNav.js
++++ b/src/components/KanabanNav.js
+@@ -6,6 +6,10 @@ import { library } from '@fortawesome/fontawesome-svg-core';
+ import { faUserAlt, faSearch, faBars } from '@fortawesome/free-solid-svg-icons';
+ library.add(faUserAlt, faSearch, faBars);
+ class KanabanNav extends Component {
++	/**
++	 * 
++	 * @param {*} props 
++	 */
+ 	constructor(props) {
+ 		super(props);
+ 		this.state = {
+@@ -17,14 +21,27 @@ class KanabanNav extends Component {
+ 		};
+ 		this.myRef = React.createRef();
+ 	}
++
++	/**
++	 * 
++	 * @param {*} e 
++	 */
+ 	onContextMenuClick(e) {
+ 		e.preventDefault();
+ 		this.setState({ visible: true, position: { x: e.clientX, y: e.clientY } });
+ 	}
+ 
++	/**
++	 * 
++	 * @param {*} e 
++	 */
+ 	onClickContextMenu(e) {
+-		console.log(e.target);
++		this.setState({ visible: false });
+ 	}
++
++	/**
++	 * 
++	 */
+ 	render() {
+ 		return (
+ 			<div className="top-nav">
+@@ -50,11 +67,11 @@ class KanabanNav extends Component {
+ 					</li>
+ 				</ul>
+ 				{this.state.visible ? (
+-					<ContextMenu position={this.state.position} onClickContextMenu={this.onClickContextMenu}>
+-						<ContextItem title={'snehal1'} />
+-						<ContextItem title={'snehal2'} />
+-						<ContextItem title={'snehal3'} />
+-						<ContextItem title={'snehal4'} />
++					<ContextMenu position={this.state.position} onClickContextMenu={this.onClickContextMenu.bind(this)}>
++						<ContextItem title={'Profile'} />
++						<ContextItem title={'Settings'} />
++						<ContextItem className={'hr'} />
++						<ContextItem title={'Logout'} />
+ 					</ContextMenu>
+ 				) : (
+ 					''
+diff --git a/src/components/KanbanBoard.js b/src/components/KanbanBoard.js
+index 1e1ce35..898c830 100644
+--- a/src/components/KanbanBoard.js
++++ b/src/components/KanbanBoard.js
+@@ -44,25 +44,25 @@ class KanbanBoard extends Component {
+ 			return <h3>Loading...</h3>;
+ 		}
+ 
++		const kanbanColumns = this.columns.map((column) => {
++			return (
++				<KanbanColumn
++					name={column.name}
++					stage={column.stage}
++					projects={this.state.projects.filter((project) => {
++						return parseInt(project.project_stage, 10) === column.stage;
++					})}
++					onDragEnter={this.handleOnDragEnter}
++					onDragEnd={this.handleOnDragEnd}
++					key={column.stage}
++				/>
++			);
++		});
++
+ 		return (
+ 			<div>
+ 				<KanabanNav />
+-				<ul className="kboard">
+-					{this.columns.map((column) => {
+-						return (
+-							<KanbanColumn
+-								name={column.name}
+-								stage={column.stage}
+-								projects={this.state.projects.filter((project) => {
+-									return parseInt(project.project_stage, 10) === column.stage;
+-								})}
+-								onDragEnter={this.handleOnDragEnter}
+-								onDragEnd={this.handleOnDragEnd}
+-								key={column.stage}
+-							/>
+-						);
+-					})}
+-				</ul>
++				<ul className="kboard">{kanbanColumns}</ul>
+ 			</div>
+ 		);
+ 	}
+diff --git a/src/components/kanaban.scss b/src/components/kanaban.scss
+index b8b11b7..e38cc81 100644
+--- a/src/components/kanaban.scss
++++ b/src/components/kanaban.scss
+@@ -168,12 +168,24 @@
+ 	background-color: #60a222;
+ 	border-color: #60a222;
+ }
++
+ .context-menu {
+ 	position: fixed;
+ 	background-color: white;
+ 	box-shadow: 0px 2px 10px #999999;
+ 	z-index: 999999;
+ 	transition: 0.4s;
+-	cursor: point;
+ 	border-radius: 5px;
++	.context-item {
++		padding: 10px;
++		cursor: pointer;
++	}
++	:first-child {
++		padding-bottom: 0px;
++	}
++}
++
++.hr {
++	border-bottom: 1px solid #bdc3c7;
++	padding: 0px !important;
+ }
+-- 
+2.14.1
+

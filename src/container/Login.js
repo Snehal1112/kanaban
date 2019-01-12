@@ -7,7 +7,9 @@ import Util from '../utils';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
-library.add(faUserCircle);
+import { faGoogle, faGithubAlt, faFacebook } from '@fortawesome/free-brands-svg-icons';
+
+library.add(faUserCircle, faGoogle, faGithubAlt, faFacebook);
 
 export class Login extends Component {
 	onClickLogin(e) {
@@ -23,7 +25,7 @@ export class Login extends Component {
 	render() {
 		return (
 			<div className="login-container">
-				<form className="login" method="POST">
+				<form method="POST" className="login">
 					<div className="login-title-container">
 						<FontAwesomeIcon icon={faUserCircle} size="8x" color={'#2979FF'} />
 						<h2 className="title">Login</h2>
@@ -44,18 +46,29 @@ export class Login extends Component {
 					)}
 
 					<input type="submit" onClick={(e) => this.onClickLogin(e)} value="Login" />
+					<hr style={{ width: '100%' }} />
+					<div className="external-signin">
+						<a className={'google-signin'}>
+							<FontAwesomeIcon icon={faGoogle} /> Google
+						</a>
+						<a className={'github-signin'}>
+							<FontAwesomeIcon icon={faGithubAlt} /> Github
+						</a>
+						<a className={'facebook-signin'}>
+							<FontAwesomeIcon icon={faFacebook} /> Facebook
+						</a>
+					</div>
 				</form>
 			</div>
 		);
 	}
 }
-
 Login.propTypes = {
-	data: PropTypes.object
+	data: PropTypes.object,
+	authenticate: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({
-	data: state.auth.data
+	data: state.auth.data ? state.auth.data : { loading: false }
 });
-
 export default connect(mapStateToProps, { authenticate })(Login);
