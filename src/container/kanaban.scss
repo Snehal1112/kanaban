@@ -236,5 +236,25 @@
 		.hide {
 			display: none;
 		}
+		.external-signin {
+			padding: 10px;
+			font-weight: 600;
+			color: #fff;
+
+			a {
+				margin-right: 20px;
+				padding: 10px;
+				border-radius: 5px;
+			}
+			.google-signin {
+				background-color: #e74c3c;
+			}
+			.github-signin {
+				background-color: #000000;
+			}
+			.facebook-signin {
+				background-color: #3b5998;
+			}
+		}
 	}
 }

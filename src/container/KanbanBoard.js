@@ -22,7 +22,6 @@ class KanbanBoard extends Component {
 	}
 
 	componentDidMount() {
-		console.log(this.props);
 		this.setState({ projects: projects, isLoading: false });
 	}
 

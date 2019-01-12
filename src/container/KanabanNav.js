@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import ContextMenu from '../components/ContextMenu';
 import ContextItem from '../components/ContextItem';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { logout } from '../actions/Authentication';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faUserAlt, faSearch, faBars } from '@fortawesome/free-solid-svg-icons';
@@ -28,7 +32,7 @@ class KanabanNav extends Component {
 	 */
 	onContextMenuClick(e) {
 		e.preventDefault();
-		this.setState({ visible: true, position: { x: e.clientX, y: e.clientY } });
+		this.setState({ visible: true, position: { x: e.pageX, y: e.pageY } });
 	}
 
 	/**
@@ -36,6 +40,11 @@ class KanabanNav extends Component {
 	 * @param {*} e 
 	 */
 	onClickContextMenu(e) {
+		switch (e.target.getAttribute('name')) {
+			case 'logout':
+				this.props.logout();
+				break;
+		}
 		this.setState({ visible: false });
 	}
 
@@ -61,7 +70,7 @@ class KanabanNav extends Component {
 				<ul className="sub-nav">
 					<li>
 						<span>Snehal Dangroshiya</span>
-						<a href="#" className="nav-item" onContextMenu={(e) => this.onContextMenuClick(e)}>
+						<a href="#" className="nav-item" onClick={(e) => this.onContextMenuClick(e)}>
 							<FontAwesomeIcon icon={faUserAlt} color="#fff" />
 						</a>
 					</li>
@@ -69,11 +78,9 @@ class KanabanNav extends Component {
 				{this.state.visible ? (
 					<ContextMenu position={this.state.position} onClickContextMenu={this.onClickContextMenu.bind(this)}>
 						<ContextItem title={'Profile'} />
-						<ContextItem title={'snehal2'} />
-						<ContextItem title={'snehal3'} />
 						<ContextItem title={'Settings'} />
-						<ContextItem className={'hr'} />
-						<ContextItem title={'Logout'} />
+						<ContextItem type={'menu-splitter'} />
+						<ContextItem type={'button'} title={'Logout'} />
 					</ContextMenu>
 				) : (
 					''
@@ -82,4 +89,10 @@ class KanabanNav extends Component {
 		);
 	}
 }
-export default KanabanNav;
+
+KanabanNav.propTypes = {
+	logout: PropTypes.func
+};
+const mapStateToProps = (state) => ({});
+
+export default connect(mapStateToProps, { logout })(KanabanNav);

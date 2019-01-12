@@ -1,14 +1,17 @@
-import React from "react";
-
+import React from 'react';
+import Utils from '../utils';
 function ContextItem(props) {
-  return (
-    <div
-      className={`context-item ${props.className ? props.className : ""}`}
-      style={props.styles}
-    >
-      {props.title}
-    </div>
-  );
+	let { title = '', className, styles = {}, type = 'button' } = props;
+	if (Utils.isEmpty(title) && type !== 'menu-splitter') {
+		console.warn('ContextItem should have proper title');
+	} else if (type === 'menu-splitter' && Utils.isEmpty(className)) {
+		className = 'hr';
+	}
+	return (
+		<div name={title.toLowerCase()} className={`context-item ${className ? className : ''}`} style={styles}>
+			{title}
+		</div>
+	);
 }
 
 export default ContextItem;
