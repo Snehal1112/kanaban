@@ -8,9 +8,9 @@ function ContextItem(props) {
 		className = 'hr';
 	}
 	return (
-		<div name={title.toLowerCase()} className={`context-item ${className ? className : ''}`} style={styles}>
+		<li name={title.toLowerCase()} className={`context-item ${className ? className : ''}`} style={styles}>
 			{title}
-		</div>
+		</li>
 	);
 }
 

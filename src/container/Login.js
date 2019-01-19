@@ -47,7 +47,12 @@ export class Login extends Component {
 
 					<input type="submit" onClick={(e) => this.onClickLogin(e)} value="Login" />
 					<hr style={{ width: '100%' }} />
-					<div className="external-signin">
+					<div
+						className="external-signin"
+						onClick={(e) => {
+							console.log(e.target);
+						}}
+					>
 						<a className={'google-signin'}>
 							<FontAwesomeIcon icon={faGoogle} /> Google
 						</a>
